@@ -20,7 +20,7 @@ class Employee(models.Model):
 #    phone      = models.PhoneNumberField(blank=True)
     employ_date  = models.DateField()
     dismiss_date = models.DateField(null=True, blank=True)
-    department   = models.ForeignKey(Department)
+    department   = models.ForeignKey(Department, related_name='employees')
     position     = models.CharField(max_length=255)
 
     def get_full_name(self):
