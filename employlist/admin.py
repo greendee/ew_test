@@ -9,7 +9,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 class EmployeeAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Personal info', {'fields': ['first_name', 'last_name', 'patronymic', 'birth_date', 'email']}),
+        ('Personal info', {'fields': ['first_name', 'last_name', 'patronymic', 'birth_date', 'phone', 'email']}),
         ('Employee info', {'fields': ['employ_date', 'dismiss_date', 'department', 'position']}),
     ]
     list_display = ('get_name_with_position', 'is_employed_now')
