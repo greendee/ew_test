@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from datetime import date
+from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 
@@ -17,7 +18,8 @@ class Employee(models.Model):
     patronymic = models.CharField(max_length=255, blank=True)
     birth_date = models.DateField()
     email      = models.EmailField(blank=True)
-#    phone      = models.PhoneNumberField(blank=True)
+    phone      = PhoneNumberField(blank=True) # external lib is better at this
+
     employ_date  = models.DateField()
     dismiss_date = models.DateField(null=True, blank=True)
     department   = models.ForeignKey(Department, related_name='employees')
