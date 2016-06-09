@@ -9,7 +9,7 @@ urlpatterns = [
             + r'(?:emp-(?P<is_employed_now>(y|n)+)/)?' \
             + r'(?:page-(?P<page>[0-9]+)/)?' \
             + r'$',
-        EmployeeListView.as_view(), name='list2'
+        EmployeeListView.as_view(), name='list'
     ),
     url(r'^employees/apply-filter/',
         EmployeeFilterView.as_view(), name='filter'

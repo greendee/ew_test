@@ -30,8 +30,8 @@ class FilterForm(forms.Form):
             if is_employed_now:
                 params['is_employed_now'] = is_employed_now
 
-            return reverse('list2', kwargs=params)
-        return reverse('list2')
+            return reverse('list', kwargs=params)
+        return reverse('list')
 
     def get_queryset_filter(self):
         q = Q()
