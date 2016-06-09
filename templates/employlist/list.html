@@ -7,6 +7,9 @@
 <hr/>
 <div class="row">
     <div class="col-md-9">
+
+{% include 'employlist/pagination.html' %}
+
         <table class="table table-bordered table-striped">
             <thead><tr><th>Name</th> <th>Department</th> <th>Position</th></thead>
             <tbody>
@@ -20,32 +23,13 @@
             </tbody>
         </table>
 
-  <ul class="pagination">
-{% if page_obj.has_previous %}
-    <li>
-      <a href="/list.html?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-{% endif %}
-{% for page in paginator.page_range %}
-    <li><a href="/list.html?page={{ page }}">{{ page }}</a></li>
-{% endfor %}
-{% if page_obj.has_next %}
-    <li>
-      <a href="/list.html?page={{ page_obj.next_page_number }}" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-{% endif %}
-  </ul>
-</nav>
+{% include 'employlist/pagination.html' %}
 
     </div>
 
     <div class="col-md-3">
         <h3>Filter by</h3>
-        <form action="/list.html" method="get">
+        <form action="{% url 'filter' %}" method="get">
         
             {{ form }}
             <input type="submit"/>

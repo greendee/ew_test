@@ -22,7 +22,7 @@ class EmployeeAdmin(admin.ModelAdmin):
 
     list_display = ('get_name_with_position', 'is_employed_now')
     list_filter  = ('department',)
-
+    search_fields = ('first_name', 'last_name', 'patronymic',)
 
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Employee, EmployeeAdmin)
