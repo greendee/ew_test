@@ -1,0 +1,42 @@
+{% extends 'employlist/base.html' %}
+
+{% block title %}{{ employee.get_full_name }}{% endblock %}
+
+{% block content %}
+<h1>{{ employee.get_full_name }}</h1>
+<hr/>
+<p class="lead">Works as {{ employee.position }} at {{ employee.department }}</p>
+
+<h2>Personal information</h2>
+<dl class="dl-horizontal">
+    <dt>Birth date</dt>
+    <dd>{{ employee.birth_date }}</dd>
+
+    {% if employee.email %}
+    <dt>E-mail</dt>
+    <dd>{{ employee.email }}</dd>
+    {% endif %}
+
+    {% if employee.phone %}
+    <dt>Phone</dt>
+    <dd>{{ employee.phone }}</dd>
+    {% endif %}
+</dl>
+
+<h2>Job imformation</h2>
+<dl class="dl-horizontal">
+    <dt>Department</dt>
+    <dd>{{ employee.department }}</dd>
+
+    <dt>Position</dt>
+    <dd>{{ employee.position }}</dd>
+
+    <dt>Employ date</dt>
+    <dd>{{ employee.employ_date }}</dd>
+
+    {% if not employee.is_employed_now %}
+    <dt>Dismiss date</dt>
+    <dd>{{ employee.dismiss_date }}</dd>
+    {% endif %}
+</dl>
+{% endblock %}

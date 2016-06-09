@@ -1,5 +1,7 @@
 {% extends 'employlist/base.html' %}
 
+{% block title %}Employees list{% endblock %}
+
 {% block content %}
 <h1>Employees list</h1>
 <hr/>
@@ -10,7 +12,7 @@
             <tbody>
 {% for employee in employees %}
 <tr>
-    <td>{{ employee.get_full_name }}</td>
+    <td><a href="{% url 'detail' pk=employee.id %}">{{ employee.get_full_name }}</a></td>
     <td>{{ employee.department }}</td>
     <td>{{ employee.position }}</td>
 </tr>
