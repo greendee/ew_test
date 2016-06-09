@@ -49,3 +49,4 @@ class EmployeeListView(FormMixin, ListView):
     def get_queryset(self):
         qs = super(EmployeeListView, self).get_queryset()
         return self.apply_queryset_filter(qs)
+

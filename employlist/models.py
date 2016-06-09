@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from datetime import date
 from phonenumber_field.modelfields import PhoneNumberField
+from django.core.urlresolvers import reverse
 
 # Create your models here.
 
@@ -43,3 +44,6 @@ class Employee(models.Model):
 
     def __unicode__(self):
         return self.get_name_with_position()
+
+    def get_absolute_url(self):
+        return reverse('detail', args=[str(self.id)])
