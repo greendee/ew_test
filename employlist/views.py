@@ -23,8 +23,11 @@ class EmployeeListView(FormMixin, ListView):
 
     form_class = FilterForm
 
+    def get_form(self):
+        return FilterForm(self.request.GET)
+
     def apply_queryset_filter(self, queryset):
-        form = self.form_class(self.request.GET)
+        form = self.get_form()
 
         if form.is_valid():
             department = form.cleaned_data['department']
