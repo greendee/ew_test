@@ -3,6 +3,7 @@ from django.views.generic.base import RedirectView
 from django import forms
 from django.db.models import Q
 from django.core.urlresolvers import reverse
+from django.http import Http404
 
 from datetime import date
 from .models import Employee, Department
@@ -60,7 +61,9 @@ class EmployeeListView(ListView):
 
     def apply_queryset_filter(self, queryset):
         form = FilterForm(self.kwargs)
-        return queryset.filter(form.get_queryset_filter())
+        if form.is_valid():
+            return queryset.filter(form.get_queryset_filter())
+        raise Http404
 
     def get_queryset(self):
         qs = super(EmployeeListView, self).get_queryset()
@@ -68,7 +71,15 @@ class EmployeeListView(ListView):
 
     def get_context_data(self, **kwargs):
         ctx = super(EmployeeListView, self).get_context_data(**kwargs)
-        ctx['form'] = FilterForm(self.kwargs)
+        form = FilterForm(self.kwargs)
+        ctx['form'] = form
+        filters = {}
+        if form.data.get('department'):
+            filters['department'] = form.data.get('department')
+        if form.data.get('is_employed_now'):
+            filters['is_employed_now'] = form.data.get('is_employed_now')
+
+        ctx['filters'] = filters
         return ctx
 
 
