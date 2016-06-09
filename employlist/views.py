@@ -10,7 +10,8 @@ from .models import Employee, Department
 # Create your views here.
 
 class FilterForm(forms.Form):
-    department = forms.ModelChoiceField(required=False, queryset=Department.objects.all())
+    department = forms.ModelChoiceField(required=False,
+                     queryset=Department.objects.all())
     is_employed_now = forms.NullBooleanField(required=False)
 
 
@@ -34,7 +35,8 @@ class EmployeeListView(FormMixin, ListView):
 
             if is_employed_now is not None:
                 if is_employed_now:
-                    queryset = queryset.filter( Q(dismiss_date__isnull=True) | Q(dismiss_date__gte=date.today()) )
+                    queryset = queryset.filter( Q(dismiss_date__isnull=True) |
+                                   Q(dismiss_date__gte=date.today()) )
                 else:
                     queryset = queryset.filter(dismiss_date__lt=date.today())
 
