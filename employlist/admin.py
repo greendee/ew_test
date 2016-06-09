@@ -12,7 +12,7 @@ class EmployeeAdmin(admin.ModelAdmin):
         ('Personal info',
             {'fields':
                 ['first_name', 'last_name', 'patronymic',
-                 'birth_date', 'phone', 'email']}
+                 'birth_date', 'phone', 'email']
         }),
         ('Employee info',
             {'fields':
