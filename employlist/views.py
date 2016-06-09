@@ -17,7 +17,7 @@ class FilterForm(forms.Form):
 
 class EmployeeListView(FormMixin, ListView):
     model = Employee
-    paginate_by = 2
+    paginate_by = 25
     template_name = 'employlist/list.html'
     context_object_name = 'employees'
 

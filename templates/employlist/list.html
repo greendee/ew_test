@@ -17,6 +17,28 @@
 {% endfor %}
             </tbody>
         </table>
+
+  <ul class="pagination">
+{% if page_obj.has_previous %}
+    <li>
+      <a href="/list.html?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+{% endif %}
+{% for page in paginator.page_range %}
+    <li><a href="/list.html?page={{ page }}">{{ page }}</a></li>
+{% endfor %}
+{% if page_obj.has_next %}
+    <li>
+      <a href="/list.html?page={{ page_obj.next_page_number }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+{% endif %}
+  </ul>
+</nav>
+
     </div>
 
     <div class="col-md-3">
