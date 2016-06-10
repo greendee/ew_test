@@ -1,50 +1,32 @@
 {% extends 'employlist/base.html' %}
 
-{% block title %}Alphabetic list{% endblock %}
+{% block title %}Alphabetic index{% endblock %}
 
 {% block content %}
-<h1>Alphabetic list ({{ page_obj.letter_range }})</h1>
+<h1>Alphabetic index ({{ page_obj.letter_range }})</h1>
 <hr/>
+
 <div class="row">
     <div class="col-md-12">
+
+        {% include 'employlist/abc_pagination.html' %}
 
         <table class="table table-bordered table-striped">
             <thead><tr><th>Name</th> <th>Department</th> <th>Position</th></thead>
             <tbody>
 
-{% for employee in employees %}
-<tr>
-    <td><a href="{{ employee.get_absolute_url }}">{{ employee.get_full_name }}</a></td>
-    <td>{{ employee.department }}</td>
-    <td>{{ employee.position }}</td>
-</tr>
-{% endfor %}
+            {% for employee in employees %}
+                <tr>
+                    <td><a href="{{ employee.get_absolute_url }}">{{ employee.get_full_name }}</a></td>
+                    <td>{{ employee.department }}</td>
+                    <td>{{ employee.position }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
 
+        {% include 'employlist/abc_pagination.html' %}
+
     </div>
 </div>
-
-<nav>
-  <ul class="pagination">
-{% if page_obj.has_previous %}
-    <li>
-      <a href="{% url 'alphabetic' page=page_obj.previous_page_number %}" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-{% endif %}
-{% for page in paginator.page_range %}
-    <li{% if page == page_obj.number %} class="active"{% endif %}><a href="{% url 'alphabetic' page=page %}">{{ page }}</a></li>
-{% endfor %}
-{% if page_obj.has_next %}
-    <li>
-      <a href="{% url 'alphabetic' page=page_obj.next_page_number %}" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-{% endif %}
-  </ul>
-</nav>
-
 {% endblock %}
