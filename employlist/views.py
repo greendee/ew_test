@@ -2,7 +2,6 @@ from django.views.generic import ListView
 from django.views.generic.base import RedirectView
 from django.http import Http404
 from django.core.paginator import EmptyPage
-from math import floor
 
 from .models import Employee, Department
 from .forms import FilterForm

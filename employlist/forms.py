@@ -3,6 +3,8 @@ from django.db.models import Q
 from django.core.urlresolvers import reverse
 from datetime import date
 
+from .models import Department
+
 
 class FilterForm(forms.Form):
     department = forms.ModelChoiceField(required=False,

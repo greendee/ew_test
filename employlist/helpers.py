@@ -1,3 +1,6 @@
+from math import floor
+
+
 class AlphabeticGroupPaginator(object):
     
     def __init__(self, queryset, max_pages,
