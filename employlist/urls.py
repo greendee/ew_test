@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.views.generic import DetailView
-from .views import EmployeeListView, EmployeeFilterView
+from .views import EmployeeListView, EmployeeFilterView, AlphabeticIndexView
 from .models import Employee
 
 urlpatterns = [
@@ -19,5 +19,8 @@ urlpatterns = [
             model=Employee, template_name='employlist/detail.html',
             context_object_name='employee'
         ), name='detail'
+    ),
+    url(r'^alphabetic/(?:page-(?P<page>[0-9]+)/)?',
+        AlphabeticIndexView.as_view(), name='alphabetic'
     ),
 ]

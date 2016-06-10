@@ -20,13 +20,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Employee lister</a>
+      <a class="navbar-brand" href="/">Employee lister</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="{% if request.resolver_match.url_name == 'list' %}{% url 'list' %}{% endif %}">Employees list <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Alphabetic navigation</a></li>
+        <li{% if request.resolver_match.url_name == 'list' %} class="active"{% endif %}><a href="{% url 'list' %}">Employees list <span class="sr-only">(current)</span></a></li>
+        <li{% if request.resolver_match.url_name == 'alphabetic' %} class="active"{% endif %}><a href="{% url 'alphabetic' %}">Alphabetic navigation</a></li>
       </ul>
     </div>
 
