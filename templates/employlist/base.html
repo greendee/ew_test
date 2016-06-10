@@ -6,7 +6,6 @@
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}"/>
         <link rel="stylesheet" href="{% static 'fixes.css' %}"/>
-        <script src="{% static 'bootstrap.min.js' %}"></script>
     </head>
 
     <body>
@@ -40,5 +39,7 @@
         </div>
         
         <hr/>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="{% static 'bootstrap.min.js' %}"></script>
     </body>
 </html>
