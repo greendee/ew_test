@@ -14,7 +14,7 @@ class AlphabeticGroupPaginator(object):
         self.letters = {}
 
         for obj in self.object_list:
-            obj_name = unicode(obj)
+            obj_name = unicode(getattr(obj, 'last_name'))
             letter = obj_name[0]
 
             if not self.letters.get(letter):

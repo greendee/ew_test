@@ -29,16 +29,16 @@ class Employee(models.Model):
     def get_full_name(self):
         if self.patronymic:
             return '%s %s %s' % \
-                (self.first_name, self.patronymic, self.last_name)
+                (self.last_name, self.first_name, self.patronymic)
         else:
-            return '%s %s' % (self.first_name, self.last_name)
+            return '%s %s' % (self.last_name, self.first_name)
 
     def get_name_with_position(self):
         return '%s (%s at %s)' % \
             (self.get_full_name(), self.position, self.department)
 
     def is_employed_now(self):
-        return (self.dismiss_date is None or self.dismiss_date < date.today())
+        return (self.dismiss_date is None or self.dismiss_date <= date.today())
 
     is_employed_now.boolean = True
 

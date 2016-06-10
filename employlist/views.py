@@ -14,7 +14,7 @@ class EmployeeListView(ListView):
     paginate_by = 25
     template_name = 'employlist/list.html'
     context_object_name = 'employees'
-    ordering = ['first_name', 'patronymic', 'last_name']
+    ordering = ['last_name', 'first_name', 'patronymic']
 
     def apply_queryset_filter(self, queryset):
         form = FilterForm(self.kwargs)
@@ -53,7 +53,7 @@ class AlphabeticIndexView(ListView):
     paginate_by = 7
     template_name = 'employlist/alphabetic.html'
     paginator_class = AlphabeticGroupPaginator
-    ordering = 'first_name'
+    ordering = 'last_name'
     context_object_name = 'employees'
 
     def get_queryset(self):
