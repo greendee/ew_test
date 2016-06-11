@@ -1,61 +1,52 @@
 from __future__ import unicode_literals
 from math import floor
+from django.db.models import Count
 
 
 class AlphabeticGroupPaginator(object):
 
     def __init__(self, queryset, max_pages,
                  orphans=0, allow_empty_first_page=True):
+
         self.object_list = queryset
-        self.max_pages = max_pages
-        self.count = self.object_list.count()
         self.pages = []
 
-        self.letters = {}
+        letter_counts = queryset.model.objects.values_list('first_letter') \
+            .annotate(Count('first_letter')).order_by('first_letter')
 
-        for obj in self.object_list:
-            obj_name = unicode(getattr(obj, 'last_name'))
-            letter = obj_name[0]
+        total = sum([x[1] for x in letter_counts])
+        per_page = total / float(max_pages)
+        letter_ranges = {}
 
-            if not self.letters.get(letter):
-                self.letters[letter] = {'count': 0}
-            self.letters[letter]['count'] += 1
-
-        per_page = self.count / float(max_pages)
         count_accum = 0
-	letters_sorted = sorted([l for l, d in self.letters.iteritems()])
+        letter_groups = [[] for _ in range(max_pages)]
 
-        for l in letters_sorted:
-            self.letters[l]['start'] = count_accum
-            self.letters[l]['end'] = \
-                count_accum + self.letters[l]['count']
-            self.letters[l]['mid'] = \
-                count_accum + self.letters[l]['count'] / float(2)
-            self.letters[l]['page'] = \
-                int(floor(self.letters[l]['mid'] / per_page))
+        for l, c in letter_counts:
+            letter_ranges[l] = (count_accum, count_accum + c)
 
-            count_accum += self.letters[l]['count']
+            letter_mid = count_accum + c / 2.0
+            page = int(floor(letter_mid / per_page))
+            letter_groups[page].append(l)
 
-        for page in range(0, self.max_pages):
-            ltrs = []
-            for l in letters_sorted:
-                if self.letters[l]['page'] == page:
-                    ltrs.append(l)
+            count_accum += c
 
-            self.pages.append( (ltrs[0], ltrs[-1]) )
-            print(self.pages[page])
+        for n, g in enumerate(letter_groups):
+            if len(g) > 0:
+                first_letter = g[0]
+                last_letter = g[-1]
+                start = letter_ranges[first_letter][0]
+                end = letter_ranges[last_letter][1]
 
+                self.pages.append([(first_letter, last_letter), (start, end)])
 
     def page(self, number):
         page = number - 1
-        if page in range(self.max_pages):
+        if page in range(len(self.pages)):
+            letter_range = self.pages[page][0]
+            start, end = self.pages[page][1]
+
             return AlphabeticPage(self, \
-                     self.object_list[
-                         self.letters[self.pages[page][0]]['start']: \
-                         self.letters[self.pages[page][1]]['end']
-                     ],
-                     number
-                   )
+                        self.object_list[start:end], number, letter_range)
         else:
             raise EmptyPage
 
@@ -64,15 +55,14 @@ class AlphabeticGroupPaginator(object):
 
     page_range = property(_get_page_range)
 
+
 class AlphabeticPage(object):
 
-    def __init__(self, paginator, object_list, number):
+    def __init__(self, paginator, object_list, number, letter_range):
         self.paginator = paginator
         self.object_list = object_list
         self.number = number
-        self.letter_range = '%c-%c' % \
-                (self.paginator.pages[self.number - 1][0],
-                 self.paginator.pages[self.number - 1][1])
+        self.letter_range = '%c-%c' % (letter_range)
 
     def has_other_pages(self):
         return self.has_previous() or self.has_next()
@@ -81,7 +71,6 @@ class AlphabeticPage(object):
         return self.number > 1
 
     def has_next(self):
-        print self.number
         return len(self.paginator.pages) > self.number
 
     def next_page_number(self):

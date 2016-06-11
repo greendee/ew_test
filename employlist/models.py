@@ -13,6 +13,7 @@ class Department(models.Model):
     def __unicode__(self):
         return self.title
 
+
 class Employee(models.Model):
     first_name = models.CharField(max_length=255)
     last_name  = models.CharField(max_length=255)
@@ -25,6 +26,8 @@ class Employee(models.Model):
     dismiss_date = models.DateField(null=True, blank=True)
     department   = models.ForeignKey(Department, related_name='employees')
     position     = models.CharField(max_length=255)
+
+    first_letter = models.CharField(max_length=1, editable=False)
 
     def get_full_name(self):
         if self.patronymic:
@@ -47,3 +50,7 @@ class Employee(models.Model):
 
     def get_absolute_url(self):
         return reverse('detail', args=[str(self.id)])
+
+    def save(self, *args, **kwargs):
+        self.first_letter = self.last_name[0]
+        super(Employee, self).save(*args, **kwargs)
