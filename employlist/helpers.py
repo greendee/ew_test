@@ -11,6 +11,7 @@ class AlphabeticGroupPaginator(object):
 
         self.object_list = queryset
         self.pages = []
+        self.page_titles = []
 
         letter_counts = queryset.model.objects.values_list('first_letter') \
             .annotate(Count('first_letter')).order_by('first_letter')
@@ -39,31 +40,37 @@ class AlphabeticGroupPaginator(object):
                 end = letter_ranges[last_letter][1]
 
                 self.pages.append([(first_letter, last_letter), (start, end)])
+                self.page_titles.append("%c-%c" % (first_letter, last_letter))
 
     def page(self, number):
-        page = number - 1
-        if page in range(len(self.pages)):
+        if number in self.page_range:
+            page = number - 1
             letter_range = self.pages[page][0]
             start, end = self.pages[page][1]
 
             return AlphabeticPage(self, \
-                        self.object_list[start:end], number, letter_range)
+                        self.object_list[start:end], number)
         else:
             raise EmptyPage
 
     def _get_page_range(self):
-        return xrange(1, len(self.pages) + 1)
+        return range(1, len(self.pages) + 1)
 
     page_range = property(_get_page_range)
+
+    def _get_pages_with_title(self):
+        return [(n, self.page_titles[n - 1]) for n in self.page_range]
+
+    pages_with_title = property(_get_pages_with_title)
 
 
 class AlphabeticPage(object):
 
-    def __init__(self, paginator, object_list, number, letter_range):
+    def __init__(self, paginator, object_list, number):
         self.paginator = paginator
         self.object_list = object_list
         self.number = number
-        self.letter_range = '%c-%c' % (letter_range)
+        self.letter_range = paginator.page_titles[number - 1]
 
     def has_other_pages(self):
         return self.has_previous() or self.has_next()

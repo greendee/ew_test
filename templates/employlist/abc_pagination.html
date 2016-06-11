@@ -10,9 +10,9 @@
         </li>
         {% endif %}
         
-        {% for page in paginator.page_range %}
-        <li{% if page == page_obj.number %} class="active"{% endif %}>  
-            <a href="{% url 'alphabetic' page=page %}">{{ page }}</a>
+        {% for page, title in paginator.pages_with_title %}
+        <li{% if page == page_obj.number %} class="active"{% endif %}>
+            <a href="{% url 'alphabetic' page=page %}">{{ title }}</a>
         </li>
         {% endfor %}
         
