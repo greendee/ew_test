@@ -52,7 +52,7 @@ class AlphabeticIndexView(ListView):
     paginate_by = 7
     template_name = 'employlist/alphabetic.html'
     paginator_class = AlphabeticGroupPaginator
-    ordering = 'last_name'
+    ordering = ['last_name', 'first_name', 'patronymic']
     context_object_name = 'employees'
 
     def get_queryset(self):
