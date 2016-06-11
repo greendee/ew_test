@@ -27,7 +27,8 @@ class Employee(models.Model):
     department   = models.ForeignKey(Department, related_name='employees')
     position     = models.CharField(max_length=255)
 
-    first_letter = models.CharField(max_length=1, editable=False)
+    first_letter = models.CharField(max_length=1, editable=False, \
+                        db_index=True)
 
     def get_full_name(self):
         if self.patronymic:
