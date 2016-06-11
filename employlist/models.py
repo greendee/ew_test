@@ -41,7 +41,8 @@ class Employee(models.Model):
             (self.get_full_name(), self.position, self.department)
 
     def is_employed_now(self):
-        return (self.dismiss_date is None or self.dismiss_date >= date.today())
+        return (self.dismiss_date is None or \
+                 self.dismiss_date >= date.today())
 
     is_employed_now.boolean = True
 
