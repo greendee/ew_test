@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from math import floor
 from django.db.models import Count
+from django.core.paginator import EmptyPage
 
 
 class AlphabeticGroupPaginator(object):
