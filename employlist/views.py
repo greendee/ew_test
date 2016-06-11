@@ -49,7 +49,7 @@ class EmployeeFilterView(RedirectView):
 
 class AlphabeticIndexView(ListView):
     model = Employee
-    paginate_by = 3
+    paginate_by = 7
     template_name = 'employlist/alphabetic.html'
     paginator_class = AlphabeticGroupPaginator
     ordering = 'last_name'
