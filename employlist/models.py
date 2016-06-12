@@ -41,11 +41,14 @@ class Employee(models.Model):
         return '%s (%s at %s)' % \
             (self.get_full_name(), self.position, self.department)
 
+    get_name_with_position.short_description = 'Name with position'
+
     def is_employed_now(self):
         return (self.dismiss_date is None or \
                  self.dismiss_date >= date.today())
 
     is_employed_now.boolean = True
+    is_employed_now.short_description = 'Is employed now'
 
     def __unicode__(self):
         return self.get_name_with_position()
