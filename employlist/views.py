@@ -73,8 +73,8 @@ class EmployeeFilterView(RedirectView):
         if form.is_valid():
             params = {}
             # raw data is passed to reverse() params
-            department = self.data.get('department')
-            is_employed_now = self.data.get('is_employed_now')
+            department = form.data.get('department')
+            is_employed_now = form.data.get('is_employed_now')
 
             if department:
                 params['department'] = department
